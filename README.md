@@ -1,4 +1,4 @@
-# harvtech-vegetables-health-ai
+# Vegetables Health
 The AI project to assess the health of vegetables.
 
 ## Roadmap:
