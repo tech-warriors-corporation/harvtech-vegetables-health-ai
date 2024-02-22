@@ -1,5 +1,5 @@
 # Vegetables Health
-The AI project to assess the health of vegetables.
+The AI project to assess the vegetables health.
 
 ## Roadmap:
 - [ ] Create a REST API to use this code.
