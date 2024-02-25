@@ -27,7 +27,7 @@ Run the directory _tests_ and the [PyCharm](https://www.jetbrains.com/pycharm) w
 - [X] Kaggle explains;
 - [X] Tests describe how to execute;
 - [ ] Deploy project in VPS;
-- [ ] Validation URL from back-end with prefix in DNS;
+- [ ] Validation URL from back-end with prefix in DNS of [cloud (Jorge)](https://cloud.ibm.com);
 - [ ] ChatGPT return with data structured;
 - [ ] Create all tests with different models;
 - [ ] Search new tomato models in [Kaggle](https://www.kaggle.com);
