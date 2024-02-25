@@ -32,4 +32,5 @@ Run the directory _tests_ and the [PyCharm](https://www.jetbrains.com/pycharm) w
 - [ ] Create all tests with different models;
 - [ ] Search new tomato models in [Kaggle](https://www.kaggle.com);
 - [ ] Integrated responses with [ChatGPT](https://chat.openai.com);
-- [ ] Upload vegetable images in [cloud (Jorge)](https://cloud.ibm.com).
+- [ ] Upload vegetable images in [cloud (Jorge)](https://cloud.ibm.com);
+- [ ] Configure CORS.
