@@ -3,10 +3,13 @@ from marshmallow import ValidationError
 from schemas.PredictionRequestSchema import PredictionRequestSchema
 from tests.constants.constants import SUCCESS_TEST_DATA, FAILURE_TEST_DATA
 
+
 class MockModelsConstants:
     available_models = ["bean_leaf", "potato_leaf"]
 
+
 ModelsConstants = MockModelsConstants()
+
 
 class TestPredictionRequestSchema:
     @pytest.fixture(autouse=True)

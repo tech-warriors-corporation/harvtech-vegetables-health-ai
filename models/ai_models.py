@@ -17,15 +17,19 @@ from logs.log_config import configure_logger
 logger = configure_logger(__name__)
 models_constant = ModelsConstants()
 
+
 class IAModel(ABC):
     @abstractmethod
     def predict(self, image_content):
         pass
 
+
 class TomatoLeafModel(IAModel):
     def __init__(self):
         self.__load_model()
-        self.class_names = ["Bacterial_spot", "Early_blight", "Late_blight", "Leaf_Mold", "Septoria_leaf_spot", "Spider_mites Two-spotted_spider_mite", "Target_Spot", "Tomato_Yellow_Leaf_Curl_Virus", "Tomato_mosaic_virus", "healthy"]
+        self.class_names = ["Bacterial_spot", "Early_blight", "Late_blight", "Leaf_Mold", "Septoria_leaf_spot",
+                            "Spider_mites Two-spotted_spider_mite", "Target_Spot", "Tomato_Yellow_Leaf_Curl_Virus",
+                            "Tomato_mosaic_virus", "healthy"]
 
     def __load_model(self):
         self.model = tf.keras.models.load_model(ModelsConstants.tomato_leaf_weights_path)
@@ -36,7 +40,8 @@ class TomatoLeafModel(IAModel):
         img_array_rescaled = img_array / 255.0
         prepared_image = np.expand_dims(img_array_rescaled, axis=0)
         prediction = self.model.predict(prepared_image)[0]
-        probabilities_dict = { class_name: float(probability) * 100 for class_name, probability in zip(self.class_names, prediction) }
+        probabilities_dict = {class_name: float(probability) * 100 for class_name, probability in
+                              zip(self.class_names, prediction)}
 
         return {
             "predicted": {
@@ -45,6 +50,7 @@ class TomatoLeafModel(IAModel):
             },
             "probabilities_dict": probabilities_dict
         }
+
 
 class PotatoLeafModel(IAModel):
     def __init__(self):
@@ -59,7 +65,8 @@ class PotatoLeafModel(IAModel):
         img_array = image.img_to_array(img)
         prepared_image = np.expand_dims(img_array, axis=0)
         prediction = self.model.predict(prepared_image)[0]
-        probabilities_dict = { class_name: float(probability) * 100 for class_name, probability in zip(self.class_names, prediction) }
+        probabilities_dict = {class_name: float(probability) * 100 for class_name, probability in
+                              zip(self.class_names, prediction)}
 
         return {
             "predicted": {
@@ -68,6 +75,7 @@ class PotatoLeafModel(IAModel):
             },
             "probabilities_dict": probabilities_dict
         }
+
 
 class BeanLeafModel(IAModel):
     def __init__(self):
@@ -106,7 +114,8 @@ class BeanLeafModel(IAModel):
             probabilities = torch.nn.functional.softmax(outputs, dim=1)
             confidence, predicted = torch.max(probabilities, 1)
 
-        probabilities_dict = { class_name: probability.item() * 100 for class_name, probability in zip(self.class_names, probabilities[0]) }
+        probabilities_dict = {class_name: probability.item() * 100 for class_name, probability in
+                              zip(self.class_names, probabilities[0])}
 
         return {
             "predicted": {
