@@ -2,6 +2,7 @@ import requests
 from io import BytesIO
 from factories.ModelFactory import ModelFactory
 
+
 class PredictionService:
     @staticmethod
     def get_image(url):

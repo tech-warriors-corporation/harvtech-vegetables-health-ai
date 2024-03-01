@@ -1,5 +1,6 @@
 from schemas.PredictionRequestSchema import PredictionRequestSchema
 
+
 class PredictionRequest:
     def __init__(self, data):
         self.data = data

@@ -1,5 +1,6 @@
 from models.ai_models import BeanLeafModel, PotatoLeafModel, TomatoLeafModel
 
+
 class ModelFactory:
     model_registry = {
         "bean_leaf": BeanLeafModel,
