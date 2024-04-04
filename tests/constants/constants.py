@@ -10,6 +10,10 @@ SUCCESS_TEST_DATA = [
     {
         "model_type": "tomato_leaf",
         "content_url": "https://techwarriors-objectstorage-test.s3.us-south.cloud-object-storage.appdomain.cloud/potato_late-blight_08_zoom-Photo-OMAFRA-900x580.jpeg"
+    },
+    {
+        "model_type": "rice_leaf",
+        "content_url": "https://techwarriors-objectstorage-test.s3.us-south.cloud-object-storage.appdomain.cloud/potato_late-blight_08_zoom-Photo-OMAFRA-900x580.jpeg"
     }
 ]
 

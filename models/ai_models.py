@@ -12,6 +12,8 @@ from torchvision.transforms import v2
 from constants.ModelsConstants import ModelsConstants
 from tensorflow.keras.preprocessing import image
 import numpy as np
+import albumentations as albu
+import cv2
 from logs.log_config import configure_logger
 
 logger = configure_logger(__name__)
@@ -23,6 +25,80 @@ class IAModel(ABC):
     def predict(self, image_content):
         pass
 
+    def tensorflow_return(self, prediction, class_names):
+        max_probability_index = np.argmax(prediction)
+        return {
+            "predicted": {
+                "class": class_names[max_probability_index],
+                "confidence": prediction[max_probability_index] * 100
+            },
+            "probabilities_dict": {class_name: float(prob) * 100 for class_name, prob in zip(class_names, prediction)}
+        }
+
+    def torch_return(self, outputs, predicted_index, class_names):
+        probabilities = torch.nn.functional.softmax(outputs, dim=1)
+        max_probability = probabilities[0][predicted_index].item()
+        return {
+            "predicted": {
+                "class": class_names[predicted_index],
+                "confidence": max_probability * 100
+            },
+            "probabilities_dict": {class_name: prob.item() * 100 for class_name, prob in zip(class_names, probabilities[0])}
+        }
+
+class RiceLeafModel(IAModel):
+    def __init__(self):
+        self.__load_model()
+        self.aug_types = self.__set_augmentation()
+        self.class_names = ['bacterial_leaf_blight', 'brown_spot', 'leaf_smut']
+
+    def __load_model(self):
+        self.model = tf.keras.models.load_model(ModelsConstants.rice_leaf_weights_path)
+
+    def __set_augmentation(self):
+        return albu.Compose([
+            albu.HorizontalFlip(),
+            albu.OneOf([
+                albu.HorizontalFlip(),
+                albu.VerticalFlip(),
+            ], p=0.8),
+            albu.OneOf([
+                albu.RandomContrast(),
+                albu.RandomGamma(),
+                albu.RandomBrightness(),
+            ], p=0.3),
+            albu.OneOf([
+                albu.ElasticTransform(alpha=120, sigma=120 * 0.05, alpha_affine=120 * 0.03),
+                albu.GridDistortion(),
+                albu.OpticalDistortion(distort_limit=2, shift_limit=0.5),
+            ], p=0.3),
+            albu.ShiftScaleRotate()
+        ])
+
+    def __preprocess_image(self, image_path):
+        image = cv2.imread(image_path)
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        image = cv2.resize(image, (224, 224))
+
+        augmented = self.aug_types(image=image)
+        image = augmented['image']
+
+        return  image / 255.0
+
+    def predict(self, image_content, augment=True):
+        image = self.__preprocess_image(image_content)
+        image = np.expand_dims(image, axis=0)
+        prediction = self.model.predict(image)[0]
+        probabilities_dict = {class_name: float(probability) * 100 for class_name, probability in
+                              zip(self.class_names, prediction)}
+
+        return {
+            "predicted": {
+                "class": self.class_names[np.argmax(prediction)],
+                "confidence": np.max(prediction) * 100
+            },
+            "probabilities_dict": probabilities_dict
+        }
 
 class TomatoLeafModel(IAModel):
     def __init__(self):

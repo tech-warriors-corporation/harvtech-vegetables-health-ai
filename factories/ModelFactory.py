@@ -1,11 +1,12 @@
-from models.ai_models import BeanLeafModel, PotatoLeafModel, TomatoLeafModel
+from models.ai_models import BeanLeafModel, PotatoLeafModel, TomatoLeafModel, RiceLeafModel
 
 
 class ModelFactory:
     model_registry = {
         "bean_leaf": BeanLeafModel,
         "potato_leaf": PotatoLeafModel,
-        "tomato_leaf": TomatoLeafModel
+        "tomato_leaf": TomatoLeafModel,
+        "rice_leaf": RiceLeafModel
     }
 
     @staticmethod
