@@ -87,18 +87,9 @@ class RiceLeafModel(IAModel):
 
     def predict(self, image_content, augment=True):
         image = self.__preprocess_image(image_content)
-        image = np.expand_dims(image, axis=0)
-        prediction = self.model.predict(image)[0]
-        probabilities_dict = {class_name: float(probability) * 100 for class_name, probability in
-                              zip(self.class_names, prediction)}
-
-        return {
-            "predicted": {
-                "class": self.class_names[np.argmax(prediction)],
-                "confidence": np.max(prediction) * 100
-            },
-            "probabilities_dict": probabilities_dict
-        }
+        prepared_image = np.expand_dims(image, axis=0)
+        prediction = self.model.predict(prepared_image)[0]
+        return self.tensorflow_return(prediction, self.class_names)
 
 class TomatoLeafModel(IAModel):
     def __init__(self):
@@ -116,16 +107,7 @@ class TomatoLeafModel(IAModel):
         img_array_rescaled = img_array / 255.0
         prepared_image = np.expand_dims(img_array_rescaled, axis=0)
         prediction = self.model.predict(prepared_image)[0]
-        probabilities_dict = {class_name: float(probability) * 100 for class_name, probability in
-                              zip(self.class_names, prediction)}
-
-        return {
-            "predicted": {
-                "class": self.class_names[np.argmax(prediction)],
-                "confidence": np.max(prediction) * 100
-            },
-            "probabilities_dict": probabilities_dict
-        }
+        return self.tensorflow_return(prediction, self.class_names)
 
 
 class PotatoLeafModel(IAModel):
@@ -141,16 +123,7 @@ class PotatoLeafModel(IAModel):
         img_array = image.img_to_array(img)
         prepared_image = np.expand_dims(img_array, axis=0)
         prediction = self.model.predict(prepared_image)[0]
-        probabilities_dict = {class_name: float(probability) * 100 for class_name, probability in
-                              zip(self.class_names, prediction)}
-
-        return {
-            "predicted": {
-                "class": self.class_names[np.argmax(prediction)],
-                "confidence": np.max(prediction) * 100
-            },
-            "probabilities_dict": probabilities_dict
-        }
+        return self.tensorflow_return(prediction, self.class_names)
 
 
 class BeanLeafModel(IAModel):
@@ -187,16 +160,6 @@ class BeanLeafModel(IAModel):
 
         with torch.no_grad():
             outputs = self.model(image)
-            probabilities = torch.nn.functional.softmax(outputs, dim=1)
-            confidence, predicted = torch.max(probabilities, 1)
+            _, predicted = torch.max(outputs, 1)
 
-        probabilities_dict = {class_name: probability.item() * 100 for class_name, probability in
-                              zip(self.class_names, probabilities[0])}
-
-        return {
-            "predicted": {
-                "class": self.class_names[predicted],
-                "confidence": confidence.item() * 100
-            },
-            "probabilities_dict": probabilities_dict
-        }
+        return self.torch_return(outputs, predicted, self.class_names)
