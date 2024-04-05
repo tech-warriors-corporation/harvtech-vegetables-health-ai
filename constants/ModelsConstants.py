@@ -1,10 +1,9 @@
 import os
 from dataclasses import dataclass, field
 from pathlib import Path
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 
-dotenv_path = Path(__file__).parent / '.env'
-load_dotenv(dotenv_path=dotenv_path)
+load_dotenv(find_dotenv())
 
 
 def get_path_to_saved_models(file_name: str):

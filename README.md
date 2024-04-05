@@ -4,7 +4,8 @@ The AI project to assess the vegetables health.
 ## Support vegetables:
 - Bean;
 - Potato;
-- Tomato.
+- Tomato;
+- Rice.
 
 ## About models
 We are using models from [Kaggle](https://www.kaggle.com).
