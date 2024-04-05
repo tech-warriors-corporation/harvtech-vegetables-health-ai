@@ -12,7 +12,7 @@ cors = CORS(app)  # TODO: adicionar origin apenas para aplicação do Node.
 prediction_service = PredictionService()
 
 
-@app.route("/api/predict", methods=["POST"])
+@app.route("/predict", methods=["POST"])
 def predict():
     data = request.json
 

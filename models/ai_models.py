@@ -43,8 +43,10 @@ class IAModel(ABC):
                 "class": class_names[predicted_index],
                 "confidence": max_probability * 100
             },
-            "probabilities_dict": {class_name: prob.item() * 100 for class_name, prob in zip(class_names, probabilities[0])}
+            "probabilities_dict": {
+                class_name: prob.item() * 100 for class_name, prob in zip(class_names, probabilities[0])}
         }
+
 
 class RiceLeafModel(IAModel):
     def __init__(self):
@@ -75,21 +77,24 @@ class RiceLeafModel(IAModel):
             albu.ShiftScaleRotate()
         ])
 
-    def __preprocess_image(self, image_path):
-        image = cv2.imread(image_path)
+    def __preprocess_image(self, image_content):
+        image_bytes = np.asarray(bytearray(image_content.read()), dtype=np.uint8)
+        image = cv2.imdecode(image_bytes, cv2.IMREAD_COLOR)
+
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         image = cv2.resize(image, (224, 224))
 
         augmented = self.aug_types(image=image)
         image = augmented['image']
 
-        return  image / 255.0
+        return image / 255.0
 
-    def predict(self, image_content, augment=True):
+    def predict(self, image_content):
         image = self.__preprocess_image(image_content)
         prepared_image = np.expand_dims(image, axis=0)
         prediction = self.model.predict(prepared_image)[0]
         return self.tensorflow_return(prediction, self.class_names)
+
 
 class TomatoLeafModel(IAModel):
     def __init__(self):
