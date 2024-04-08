@@ -12,12 +12,25 @@ def get_path_to_saved_models(file_name: str):
     return base_path / "weights" / file_name
 
 
-@dataclass(frozen=True, order=True)
-class ModelsConstants:
+class SecureRepr:
+    def __repr__(self):
+        return f"<{self.__class__.__name__}: sensitive content>"
+
+
+@dataclass(frozen=True, order=True, repr=False)
+class ModelsConstants(SecureRepr):
     available_models: set[str] = field(default_factory=lambda: {"bean_leaf", "potato_leaf", "tomato_leaf", "rice_leaf"})
     bean_leaf_weights_path = get_path_to_saved_models("best_bean_leaf.pth")
     potato_leaf_weights_path = get_path_to_saved_models("best_potato_leaf.h5")
     tomato_leaf_weights_path = get_path_to_saved_models("best_tomato_leaf_inceptionV3_256.h5")
     rice_leaf_weights_path = get_path_to_saved_models("best_rice_leaf.h5")
-    # TODO: Quando tiver IP da aplicação do Node colocar IP da App e Prefix em um dataclass de Security
+
+
+@dataclass(frozen=True, order=True, repr=False)
+class SecurityConstants(SecureRepr):
     cloud_storage_url_prefix: str = os.getenv("cloud_storage_url_prefix")
+    flask_port: int = os.getenv("flask_port")
+
+
+models_constants_instance = ModelsConstants()
+security_constants_instance = SecurityConstants()

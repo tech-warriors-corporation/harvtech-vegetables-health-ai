@@ -35,3 +35,12 @@ Run the directory _tests_ and the [PyCharm](https://www.jetbrains.com/pycharm) w
 - [ ] Integrated responses with [ChatGPT](https://chat.openai.com);
 - [ ] Upload vegetable images in [cloud (Jorge)](https://cloud.ibm.com);
 - [ ] Configure CORS.
+
+
+## Environment Setup
+
+Create a `.env` file in the root folder with the following content:
+
+```plaintext
+cloud_storage_url_prefix=https://URL_TO_YOUR_STORAGE_DOMAIN/
+flask_port=5000

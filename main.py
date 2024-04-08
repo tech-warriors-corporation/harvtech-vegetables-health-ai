@@ -1,10 +1,12 @@
 import requests
 from flask import Flask, jsonify, request
+from flask_cors import CORS
+
+from constants.ModelsConstants import security_constants_instance
+from logs.log_config import configure_logger
 from prediction_requests.PredictionRequest import PredictionRequest
 from responses.PredictionResponse import PredictionResponse
 from services.PredictionService import PredictionService
-from logs.log_config import configure_logger
-from flask_cors import CORS
 
 logger = configure_logger(__name__)
 app = Flask(__name__)
@@ -41,4 +43,4 @@ def predict():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=security_constants_instance.flask_port)
