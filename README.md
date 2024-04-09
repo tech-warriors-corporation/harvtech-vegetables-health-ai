@@ -10,6 +10,13 @@ The AI project to assess the vegetables health.
 ## About models
 We are using models from [Kaggle](https://www.kaggle.com).
 
+## Environment setup
+Create a `.env` file in the root folder with content:
+```
+cloud_storage_url_prefix=https://URL_TO_YOUR_STORAGE_DOMAIN/
+flask_port=5000
+```
+
 ## Prepare
 Download the [best_tomato_leaf_inceptionV3_256.h5](https://cdn.discordapp.com/attachments/1073387782757695539/1210385802207432785/best_tomato_leaf_inceptionV3_256.h5?ex=65ea5e9f&is=65d7e99f&hm=e428e43e4d621f0de308f2d7d3e248884494d70025ff8d2a2bbcb924cdf0c7a6&) and [best_rice_leaf.h5](https://techwarriors-objectstorage-test.s3.us-south.cloud-object-storage.appdomain.cloud/best_rice_leaf.h5), put their in _constants/weights_ directory.
 
@@ -35,12 +42,3 @@ Run the directory _tests_ and the [PyCharm](https://www.jetbrains.com/pycharm) w
 - [ ] Integrated responses with [ChatGPT](https://chat.openai.com);
 - [ ] Upload vegetable images in [cloud (Jorge)](https://cloud.ibm.com);
 - [ ] Configure CORS.
-
-
-## Environment Setup
-
-Create a `.env` file in the root folder with the following content:
-
-```plaintext
-cloud_storage_url_prefix=https://URL_TO_YOUR_STORAGE_DOMAIN/
-flask_port=5000
