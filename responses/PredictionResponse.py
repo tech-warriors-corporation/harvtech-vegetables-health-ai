@@ -1,5 +1,6 @@
 from schemas.PredictionResponseSchema import PredictionResponseSchema
 
+
 class PredictionResponse:
     def __init__(self, prediction_result):
         self.prediction_result = prediction_result

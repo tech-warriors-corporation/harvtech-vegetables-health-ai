@@ -12,20 +12,96 @@ from torchvision.transforms import v2
 from constants.ModelsConstants import ModelsConstants
 from tensorflow.keras.preprocessing import image
 import numpy as np
+import albumentations as albu
+import cv2
 from logs.log_config import configure_logger
 
 logger = configure_logger(__name__)
 models_constant = ModelsConstants()
+
 
 class IAModel(ABC):
     @abstractmethod
     def predict(self, image_content):
         pass
 
+    def tensorflow_return(self, prediction, class_names):
+        max_probability_index = np.argmax(prediction)
+        return {
+            "predicted": {
+                "class": class_names[max_probability_index],
+                "confidence": prediction[max_probability_index] * 100
+            },
+            "probabilities_dict": {class_name: float(prob) * 100 for class_name, prob in zip(class_names, prediction)}
+        }
+
+    def torch_return(self, outputs, predicted_index, class_names):
+        probabilities = torch.nn.functional.softmax(outputs, dim=1)
+        max_probability = probabilities[0][predicted_index].item()
+        return {
+            "predicted": {
+                "class": class_names[predicted_index],
+                "confidence": max_probability * 100
+            },
+            "probabilities_dict": {
+                class_name: prob.item() * 100 for class_name, prob in zip(class_names, probabilities[0])}
+        }
+
+
+class RiceLeafModel(IAModel):
+    def __init__(self):
+        self.__load_model()
+        self.aug_types = self.__set_augmentation()
+        self.class_names = ['bacterial_leaf_blight', 'brown_spot', 'leaf_smut']
+
+    def __load_model(self):
+        self.model = tf.keras.models.load_model(ModelsConstants.rice_leaf_weights_path)
+
+    def __set_augmentation(self):
+        return albu.Compose([
+            albu.HorizontalFlip(),
+            albu.OneOf([
+                albu.HorizontalFlip(),
+                albu.VerticalFlip(),
+            ], p=0.8),
+            albu.OneOf([
+                albu.RandomContrast(),
+                albu.RandomGamma(),
+                albu.RandomBrightness(),
+            ], p=0.3),
+            albu.OneOf([
+                albu.ElasticTransform(alpha=120, sigma=120 * 0.05, alpha_affine=120 * 0.03),
+                albu.GridDistortion(),
+                albu.OpticalDistortion(distort_limit=2, shift_limit=0.5),
+            ], p=0.3),
+            albu.ShiftScaleRotate()
+        ])
+
+    def __preprocess_image(self, image_content):
+        image_bytes = np.asarray(bytearray(image_content.read()), dtype=np.uint8)
+        image = cv2.imdecode(image_bytes, cv2.IMREAD_COLOR)
+
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        image = cv2.resize(image, (224, 224))
+
+        augmented = self.aug_types(image=image)
+        image = augmented['image']
+
+        return image / 255.0
+
+    def predict(self, image_content):
+        image = self.__preprocess_image(image_content)
+        prepared_image = np.expand_dims(image, axis=0)
+        prediction = self.model.predict(prepared_image)[0]
+        return self.tensorflow_return(prediction, self.class_names)
+
+
 class TomatoLeafModel(IAModel):
     def __init__(self):
         self.__load_model()
-        self.class_names = ["Bacterial_spot", "Early_blight", "Late_blight", "Leaf_Mold", "Septoria_leaf_spot", "Spider_mites Two-spotted_spider_mite", "Target_Spot", "Tomato_Yellow_Leaf_Curl_Virus", "Tomato_mosaic_virus", "healthy"]
+        self.class_names = ["Bacterial_spot", "Early_blight", "Late_blight", "Leaf_Mold", "Septoria_leaf_spot",
+                            "Spider_mites Two-spotted_spider_mite", "Target_Spot", "Tomato_Yellow_Leaf_Curl_Virus",
+                            "Tomato_mosaic_virus", "healthy"]
 
     def __load_model(self):
         self.model = tf.keras.models.load_model(ModelsConstants.tomato_leaf_weights_path)
@@ -36,15 +112,8 @@ class TomatoLeafModel(IAModel):
         img_array_rescaled = img_array / 255.0
         prepared_image = np.expand_dims(img_array_rescaled, axis=0)
         prediction = self.model.predict(prepared_image)[0]
-        probabilities_dict = { class_name: float(probability) * 100 for class_name, probability in zip(self.class_names, prediction) }
+        return self.tensorflow_return(prediction, self.class_names)
 
-        return {
-            "predicted": {
-                "class": self.class_names[np.argmax(prediction)],
-                "confidence": np.max(prediction) * 100
-            },
-            "probabilities_dict": probabilities_dict
-        }
 
 class PotatoLeafModel(IAModel):
     def __init__(self):
@@ -59,15 +128,8 @@ class PotatoLeafModel(IAModel):
         img_array = image.img_to_array(img)
         prepared_image = np.expand_dims(img_array, axis=0)
         prediction = self.model.predict(prepared_image)[0]
-        probabilities_dict = { class_name: float(probability) * 100 for class_name, probability in zip(self.class_names, prediction) }
+        return self.tensorflow_return(prediction, self.class_names)
 
-        return {
-            "predicted": {
-                "class": self.class_names[np.argmax(prediction)],
-                "confidence": np.max(prediction) * 100
-            },
-            "probabilities_dict": probabilities_dict
-        }
 
 class BeanLeafModel(IAModel):
     def __init__(self):
@@ -103,15 +165,6 @@ class BeanLeafModel(IAModel):
 
         with torch.no_grad():
             outputs = self.model(image)
-            probabilities = torch.nn.functional.softmax(outputs, dim=1)
-            confidence, predicted = torch.max(probabilities, 1)
+            _, predicted = torch.max(outputs, 1)
 
-        probabilities_dict = { class_name: probability.item() * 100 for class_name, probability in zip(self.class_names, probabilities[0]) }
-
-        return {
-            "predicted": {
-                "class": self.class_names[predicted],
-                "confidence": confidence.item() * 100
-            },
-            "probabilities_dict": probabilities_dict
-        }
+        return self.torch_return(outputs, predicted, self.class_names)

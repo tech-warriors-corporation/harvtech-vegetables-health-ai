@@ -5,6 +5,7 @@ from main import app
 from schemas.PredictionResponseSchema import PredictionResponseSchema
 from tests.constants.constants import SUCCESS_TEST_DATA, FAILURE_TEST_DATA
 
+
 class TestPredictionAPI:
     success_test_data = SUCCESS_TEST_DATA
     failure_test_data = FAILURE_TEST_DATA
@@ -26,7 +27,7 @@ class TestPredictionAPI:
 
     @pytest.mark.parametrize("payload", success_test_data)
     def test_prediction_endpoint(self, client: FlaskClient, payload):
-        response = client.post('/api/predict', json=payload)
+        response = client.post('/predict', json=payload)
 
         assert response.status_code == 200, "HTTP status code should be 200"
 
@@ -36,6 +37,7 @@ class TestPredictionAPI:
 
     @pytest.mark.parametrize("test_case", failure_test_data, ids=[case["description"] for case in failure_test_data])
     def test_failure_scenarios(self, client: FlaskClient, test_case):
-        response = client.post('/api/predict', json=test_case["payload"])
+        response = client.post('/predict', json=test_case["payload"])
 
-        assert response.status_code == test_case["expected_status"], f"{test_case['description']} should return status code {test_case['expected_status']}"
+        assert response.status_code == test_case[
+            "expected_status"], f"{test_case['description']} should return status code {test_case['expected_status']}"
