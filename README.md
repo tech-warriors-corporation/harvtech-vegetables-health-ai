@@ -18,7 +18,7 @@ flask_port=5000
 ```
 
 ## Prepare
-Download the [best_tomato_leaf_inceptionV3_256.h5](https://cdn.discordapp.com/attachments/1073387782757695539/1210385802207432785/best_tomato_leaf_inceptionV3_256.h5?ex=65ea5e9f&is=65d7e99f&hm=e428e43e4d621f0de308f2d7d3e248884494d70025ff8d2a2bbcb924cdf0c7a6&) and [best_rice_leaf.h5](https://techwarriors-objectstorage-test.s3.us-south.cloud-object-storage.appdomain.cloud/best_rice_leaf.h5), put their in _constants/weights_ directory.
+Download the [best_tomato_leaf_inceptionV3_256.h5](https://techwarriors-objectstorage-test.s3.us-south.cloud-object-storage.appdomain.cloud/best_tomato_leaf_inceptionV3_256.h5) and [best_rice_leaf.h5](https://techwarriors-objectstorage-test.s3.us-south.cloud-object-storage.appdomain.cloud/best_rice_leaf.h5), put their in _constants/weights_ directory.
 
 ## Install
 Use `pip install -r requirements.txt` to install dependencies.
