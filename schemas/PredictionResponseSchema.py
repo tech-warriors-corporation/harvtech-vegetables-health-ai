@@ -19,3 +19,4 @@ class ProbabilitiesSchema(Schema):
 class PredictionResponseSchema(Schema):
     predicted = fields.Nested(PredictionDetailsSchema, required=True)
     probabilities = fields.Nested(ProbabilitiesSchema, required=True)
+    generated_text = fields.Str(required=True)

@@ -3,6 +3,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 from constants.ModelsConstants import security_constants_instance
+from gemini.gemini import Gemini
 from logs.log_config import configure_logger
 from prediction_requests.PredictionRequest import PredictionRequest
 from responses.PredictionResponse import PredictionResponse
@@ -25,7 +26,8 @@ def predict():
         content_url = validated_data["content_url"]
         image_content = prediction_service.get_image(content_url)
         prediction = prediction_service.predict_image(model, image_content)
-        response = PredictionResponse(prediction_result=prediction)
+        generated_text = Gemini().generate_text(predicted=prediction['predicted'], model_type=model)
+        response = PredictionResponse(prediction_result=prediction, generated_text=generated_text)
 
         return jsonify(response.serialize())
     except ValueError as error:
@@ -36,6 +38,11 @@ def predict():
         logger.error(f"Failed to retrieve the image from the URL: {error}")
 
         return jsonify({"error": "Failed to retrieve the image from the URL"}), 400
+
+    except IOError as e:
+        logger.error(f"Error while trying to read file: {e}")
+
+        return jsonify({"error": "Error while trying to read file"}), 500
     except Exception as error:
         logger.error(f"An error occurred during prediction: {error}")
 
