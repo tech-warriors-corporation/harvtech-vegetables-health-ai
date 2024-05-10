@@ -43,10 +43,9 @@ def get_gemini_prompt_example():
                 file_content += chunk
             return file_content
     except IOError as e:
-        logger.error(e)
-        print(f"Error while trying to open the file {file_name}: {e}")
+        logger.error(f"Error while trying to open the file {file_name}: {e}")
     except Exception as e:
-        print(f"Unexpected error: {e}")
+        logger.error(f"Unexpected error: {e}")
 
 
 class Gemini:
