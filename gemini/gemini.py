@@ -54,10 +54,8 @@ class Gemini:
         self.model = genai.GenerativeModel('gemini-pro')
 
     def describe_probabilities(self, predicted: dict, model_type: str):
-        base_prompt = f"Dado a seguinte probabilidades sobre o alimento {model_type}, informe o que causa a doença, o que fazer para cuidar e remover a doença. Se caso for menos que 5% pode ignorar todas e explicar como manter ela saudável. Seja extremamente específico de qual remédio usar e do que fazer!"
-        prompt = base_prompt + f"Se e somente se, caso todas as probabilidades forem muito baixas, quer dizer que está saudável. Se estiver saudável diga como faz para manter como está, mas somente se a probabilidade da doença for menor {gci.threshold}%.\n"
-        prompt += "Escreva tudo em português, traduza tudo que for possível.\n"
-        prompt += f"Doença: {predicted['class']} com probabilidade: {predicted['confidence']:.2f}%.\n"
+        prompt = f"Doença: {predicted['class']} com probabilidade: {predicted['confidence']:.2f}%.\n"
+        prompt += f"Model Type: {model_type}. Threshold: {gci.threshold}%.\n"
         examples = get_gemini_prompt_example()
         prompt += examples
         return prompt
