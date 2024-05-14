@@ -10,11 +10,15 @@ The AI project to assess the vegetables health.
 ## About models
 We are using models from [Kaggle](https://www.kaggle.com).
 
+## Gemini API
+You can get a Gemini API key in this [link](https://ai.google.dev/gemini-api/docs/api-key?hl=pt-br).
+
 ## Environment setup
 Create a `.env` file in the root folder with content:
 ```
 cloud_storage_url_prefix=https://URL_TO_YOUR_STORAGE_DOMAIN/
 flask_port=5000
+gemini_api_key=YOUR_API_KEY_HERE
 ```
 
 ## Prepare

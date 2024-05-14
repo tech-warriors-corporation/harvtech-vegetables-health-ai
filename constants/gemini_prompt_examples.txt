@@ -1,0 +1,50 @@
+Dado a seguinte probabilidades sobre o alimento {model_type}, informe o que causa a doença, o que fazer para cuidar e remover a doença. Se caso for menos que o threshold pode ignorar todas e explicar como manter ela saudável, pois provávelmente o modelo não encontrou doença e está saudável. Seja extremamente específico de qual remédio usar e do que fazer!
+Se e somente se, caso todas as probabilidades forem muito baixas, quer dizer que está saudável. Se estiver saudável diga como faz para manter como está, mas somente se a probabilidade da doença for menor {gci.threshold}%.
+Escreva tudo em português (pt_BR), traduza tudo que for possível.
+
+Sempre contenha o nome da doença em nome popular, causa (nome científico) da doença, probabilidade, cuidados e remoção e boas práticas de cultivo.
+
+Aqui estão alguns exemplos:
+
+Exemplo 1:
+
+*Doença:* Ferrugem do Feijão (Bean Rust)
+
+*Causa:* O fungo Uromyces appendiculatus
+
+*Probabilidade*: 98.40%
+
+*Cuidados e Remoção:*
+
+* *Remoção de plantas infectadas:* Remova e destrua as plantas infectadas imediatamente para evitar a propagação da doença.
+* *Aplicação de fungicidas:* Aplique fungicidas contendo ingredientes ativos como difenoconazol, propiconazol ou tiofanato-metil para controlar a disseminação da ferrugem.
+* *Controle de umidade:* Mantenha os níveis de umidade baixos nas plantas, pois a ferrugem prospera em ambientes úmidos.
+* *Espaçamento adequado:* Plante as plantas de feijão com espaçamento adequado para permitir uma boa circulação de ar e reduzir a umidade.
+* *Rotação de culturas:* Alterne o plantio de feijão com outras culturas não hospedeiras para reduzir o acúmulo de esporos do fungo no solo.
+
+*Mantendo a saúde do feijão:*
+
+Como a probabilidade de ferrugem no feijão é muito alta (94,52%), é essencial tomar as medidas preventivas e de controle descritas acima para manter as plantas de feijão saudáveis.
+
+Além disso, as seguintes práticas podem ajudar a manter a saúde geral das plantas de feijão:
+
+* *Solo bem drenado:* Forneça solo bem drenado para evitar condições de alagamento que podem promover doenças.
+* *Fertilização adequada:* Fertilize as plantas de feijão de acordo com as necessidades nutricionais específicas do solo.
+* *Rega regular:* Regue as plantas de feijão regularmente, evitando o excesso de água.
+* *Monitoramento regular:* Inspecione as plantas de feijão regularmente quanto a sinais de doenças ou pragas e tome medidas adequadas conforme necessário.
+
+Exemplo 2:
+
+**Causa da doença:** Fungo Phytophthora infestans
+
+**Probabilidade**: 99.82%
+
+**Cuidados e remoção da doença:**
+
+* **Remova as plantas infectadas imediatamente:** Retire todas as plantas afetadas e quaisquer restos de folhas ou caules infectados.
+* **Use fungicidas:** Aplique um fungicida específico para Late Blight, como Mancozeb ou Chlorothalonil, de acordo com as instruções do fabricante.
+* **Evite regar em excesso:** A umidade excessiva favorece o crescimento do fungo. Regue as plantas apenas quando o solo estiver seco ao toque.
+* **Mantenha as plantas bem espaçadas:** A circulação de ar adequada ajuda a prevenir a propagação da doença.
+* **Rotacione as culturas:** Não plante batatas na mesma área por vários anos consecutivos.
+
+No final de cada texto adicione boas maneiras e práticas de como manter o resto da plantação saudável.

@@ -32,5 +32,16 @@ class SecurityConstants(SecureRepr):
     flask_port: int = os.getenv("flask_port")
 
 
+@dataclass(frozen=True, order=True, repr=False)
+class GeminiConstants(SecureRepr):
+    gemini_api_key: str = os.getenv("gemini_api_key")
+    threshold: int = 10
+    max_attempts: int = 5
+    delay_seconds: int = 1
+    prompt_examples: str = Path(__file__).parent / "gemini_prompt_examples.txt"
+    chunk_size: int = 1024
+
+
 models_constants_instance = ModelsConstants()
 security_constants_instance = SecurityConstants()
+gemini_constants_instance = GeminiConstants()
