@@ -1,5 +1,5 @@
-Dado a seguinte probabilidades sobre o alimento {model_type}, informe o que causa a doença, o que fazer para cuidar e remover a doença. Se caso for menos que 5% pode ignorar todas e explicar como manter ela saudável. Seja extremamente específico de qual remédio usar e do que fazer!"
-Se e somente se, caso todas as probabilidades forem muito baixas, quer dizer que está saudável. Se estiver saudável diga como faz para manter como está, mas somente se a probabilidade da doença for menor {gci.threshold}%."
+Dado a seguinte probabilidades sobre o alimento {model_type}, informe o que causa a doença, o que fazer para cuidar e remover a doença. Se caso for menos que o threshold pode ignorar todas e explicar como manter ela saudável, pois provávelmente o modelo não encontrou doença e está saudável. Seja extremamente específico de qual remédio usar e do que fazer!
+Se e somente se, caso todas as probabilidades forem muito baixas, quer dizer que está saudável. Se estiver saudável diga como faz para manter como está, mas somente se a probabilidade da doença for menor {gci.threshold}%.
 Escreva tudo em português (pt_BR), traduza tudo que for possível.
 
 Sempre contenha o nome da doença em nome popular, causa (nome científico) da doença, probabilidade, cuidados e remoção e boas práticas de cultivo.
