@@ -25,7 +25,7 @@ gemini_api_key=YOUR_API_KEY_HERE
 Download the [best_tomato_leaf_inceptionV3_256.h5](https://techwarriors-objectstorage-test.s3.us-south.cloud-object-storage.appdomain.cloud/best_tomato_leaf_inceptionV3_256.h5) and [best_rice_leaf.h5](https://techwarriors-objectstorage-test.s3.us-south.cloud-object-storage.appdomain.cloud/best_rice_leaf.h5), put their in _constants/weights_ directory.
 
 ## Install and download models
-Use `pip install -r requirements.txt && ./setup.sh` to install dependencies.
+Use `pip install -r requirements.txt && ./setupModels.sh` to install dependencies.
 
 ## Start
 Run `python -m app` to start project.
