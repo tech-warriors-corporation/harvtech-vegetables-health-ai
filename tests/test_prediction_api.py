@@ -1,7 +1,7 @@
 import pytest
 from flask.testing import FlaskClient
 from marshmallow import ValidationError
-from main import app
+from app import app
 from schemas.PredictionResponseSchema import PredictionResponseSchema
 from tests.constants.constants import SUCCESS_TEST_DATA, FAILURE_TEST_DATA
 
