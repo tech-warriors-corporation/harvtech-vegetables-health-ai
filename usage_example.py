@@ -1,7 +1,8 @@
 import json
 import requests
 
-url = 'http://localhost:5000/predict'
+# USE the API Endpoint on CLOUD
+url = 'https://API_ON_CLOUD/predict'
 model_type = 'potato_leaf'
 image_url = "https://techwarriors-objectstorage-test.s3.us-south.cloud-object-storage.appdomain.cloud/potato_late-blight_08_zoom-Photo-OMAFRA-900x580.jpeg"
 

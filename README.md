@@ -24,11 +24,15 @@ gemini_api_key=YOUR_API_KEY_HERE
 ## Prepare
 Download the [best_tomato_leaf_inceptionV3_256.h5](https://techwarriors-objectstorage-test.s3.us-south.cloud-object-storage.appdomain.cloud/best_tomato_leaf_inceptionV3_256.h5) and [best_rice_leaf.h5](https://techwarriors-objectstorage-test.s3.us-south.cloud-object-storage.appdomain.cloud/best_rice_leaf.h5), put their in _constants/weights_ directory.
 
-## Install
-Use `pip install -r requirements.txt` to install dependencies.
+## Install and download models
+Use `pip install -r requirements.txt && ./setup.sh` to install dependencies.
 
 ## Start
-Run `python -m main` to start project.
+Run `python -m app` to start project.
+
+if using gunicorn on Cloud service
+
+Run `gunicorn --bind :5000 app:app` to start project.
 
 ## Tests
 Run the directory _tests_ and the [PyCharm](https://www.jetbrains.com/pycharm) will execute all files with application running.
