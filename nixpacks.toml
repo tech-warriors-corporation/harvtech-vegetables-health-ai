@@ -1,9 +1,0 @@
-[phases.build]
-commands = [
-  "pip install -r requirements.txt",
-  "./setupModels.sh"
-]
-[phases.start]
-commands = [
-  "python app.py"
-]
