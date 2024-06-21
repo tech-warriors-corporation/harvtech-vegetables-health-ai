@@ -1,7 +1,9 @@
 [phases.build]
-commands = []
-
+commands = [
+  "pip install -r requirements.txt",
+  "./setupModels.sh"
+]
 [phases.start]
 commands = [
-  "gunicorn --bind :5000 app:app"
+  "python app.py"
 ]
