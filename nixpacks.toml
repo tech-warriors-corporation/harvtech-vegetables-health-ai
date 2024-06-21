@@ -1,0 +1,7 @@
+[phases.build]
+commands = []
+
+[phases.start]
+commands = [
+  "gunicorn --bind :5000 app:app"
+]
