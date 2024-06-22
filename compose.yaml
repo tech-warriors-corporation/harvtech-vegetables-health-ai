@@ -5,8 +5,12 @@ services:
       dockerfile: Dockerfile
     command: python app.py
     ports:
+      - "8000:8000"
       - "5000:5000"
     volumes:
       - .:/app
     environment:
       - FLASK_ENV=development
+      - FLASK_PORT=${flask_port}
+      - GEMINI_API_KEY=${gemini_api_key}
+      - CLOUD_STORAGE_URL_PREFIX=${cloud_storage_url_prefix}

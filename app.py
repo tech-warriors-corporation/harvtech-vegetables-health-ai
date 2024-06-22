@@ -1,3 +1,5 @@
+# import pdb; pdb.set_trace()
+
 import requests
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -13,15 +15,19 @@ logger = configure_logger(__name__)
 app = Flask(__name__)
 cors = CORS(app)  # TODO: adicionar origin apenas para aplicação do Node.
 prediction_service = PredictionService()
-
+logger.info("Flask app initialized and configured.")
 
 @app.route("/predict", methods=["POST"])
 def predict():
+    logger.info("Received /predict request.")
     data = request.json
 
     try:
+        logger.debug(f"Request data: {data}")
         prediction_request = PredictionRequest(data)
         validated_data = prediction_request.load()
+        logger.debug(f"Validated data: {validated_data}")
+        
         model = validated_data["model_type"]
         content_url = validated_data["content_url"]
         image_content = prediction_service.get_image(content_url)
@@ -29,6 +35,8 @@ def predict():
         generated_text = Gemini().generate_text(predicted=prediction['predicted'], model_type=model)
         response = PredictionResponse(prediction_result=prediction, generated_text=generated_text)
 
+        logger.info("Prediction successful.")
+         
         return jsonify(response.serialize())
     except ValueError as error:
         logger.error(f"An error occurred during validation: {error}")
@@ -50,4 +58,5 @@ def predict():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True, port=security_constants_instance.flask_port)
+    logger.info("Starting Flask app.")
+    app.run(host='0.0.0.0', debug=False, port=security_constants_instance.flask_port)
