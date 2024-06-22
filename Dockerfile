@@ -26,6 +26,7 @@ RUN  wget -O constants/weights/best_rice_leaf.h5 https://techwarriors-objectstor
 
 # Expose port 5000 for the Flask app
 EXPOSE 5000
+EXPOSE 5001
 EXPOSE 8000
 
 # Command to run the Flask app
