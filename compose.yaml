@@ -3,10 +3,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: python app.py
+    # command: python app.py
+    command: ./test_svc_startup.sh
     ports:
-      - "8000:8000"
       - "5000:5000"
+      - "5001:5001"
+      - "8000:8000"
     volumes:
       - .:/app
     environment:

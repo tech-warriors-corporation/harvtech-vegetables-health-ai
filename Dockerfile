@@ -30,4 +30,10 @@ EXPOSE 5001
 EXPOSE 8000
 
 # Command to run the Flask app
-CMD ["python", "app.py"]
+# CMD ["python", "app.py"]
+
+# Make the startup script executable
+RUN chmod +x startup.sh
+
+# Set the startup script as the entry point
+CMD ["./test_svc_startup.sh"]
