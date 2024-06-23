@@ -1,5 +1,5 @@
 # Use the official Python image from the Docker Hub
-FROM python:3.11
+FROM python:3.11-slim
 
 # Set the working directory in the container
 WORKDIR /app
@@ -24,16 +24,9 @@ COPY . .
 RUN   wget -O constants/weights/best_tomato_leaf_inceptionV3_256.h5 https://techwarriors-objectstorage-test.s3.us-south.cloud-object-storage.appdomain.cloud/best_tomato_leaf_inceptionV3_256.h5
 RUN  wget -O constants/weights/best_rice_leaf.h5 https://techwarriors-objectstorage-test.s3.us-south.cloud-object-storage.appdomain.cloud/best_rice_leaf.h5
 
-# Expose port 5000 for the Flask app
-EXPOSE 5000
+# Expose port 5001 for the Flask app
 EXPOSE 5001
 EXPOSE 8000
 
 # Command to run the Flask app
-# CMD ["python", "app.py"]
-
-# Make the startup script executable
-RUN chmod +x startup.sh
-
-# Set the startup script as the entry point
-CMD ["./test_svc_startup.sh"]
+CMD ["python", "main.py"]
