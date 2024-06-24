@@ -7,7 +7,7 @@ WORKDIR /app
 
 # Install wget and any dependencies
 RUN apt-get update && \
-    apt-get install -y wget python3-opencv && \
+    apt-get install -y wget && \
     rm -rf /var/lib/apt/lists/*
 
 
