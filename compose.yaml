@@ -1,17 +1,11 @@
 services:
-  web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: python main.py
+  harvtech:
+    image: 20191405/techwarriors:slim
     ports:
       # - "5000:5000"
-      - "5001:5001"
+      - "${flask_port}:${flask_port}"
       - "8000:8000"
     volumes:
       - .:/app
-    environment:
-      - FLASK_ENV=development
-      - FLASK_PORT=${flask_port}
-      - GEMINI_API_KEY=${gemini_api_key}
-      - CLOUD_STORAGE_URL_PREFIX=${cloud_storage_url_prefix}
+    env_file:
+      - .env
