@@ -30,6 +30,9 @@ class ModelsConstants(SecureRepr):
 class SecurityConstants(SecureRepr):
     cloud_storage_url_prefix: str = os.getenv("cloud_storage_url_prefix")
     flask_port: int = os.getenv("flask_port")
+    # certs should be located under the project root /certs/ folder 
+    cert: str = os.getenv("cert", "certs/cert.pem")
+    key: str = os.getenv("key", "certs/key.pem")
 
 
 @dataclass(frozen=True, order=True, repr=False)
