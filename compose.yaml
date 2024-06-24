@@ -1,0 +1,13 @@
+services:
+  harvtech:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python3 main.py
+    ports:
+      - "${flask_port}:${flask_port}"
+      - "8000:8000"
+    volumes:
+      - .:/app
+    env_file:
+      - .env

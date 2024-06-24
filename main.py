@@ -22,6 +22,7 @@ def predict():
     try:
         prediction_request = PredictionRequest(data)
         validated_data = prediction_request.load()
+        
         model = validated_data["model_type"]
         content_url = validated_data["content_url"]
         image_content = prediction_service.get_image(content_url)
@@ -29,6 +30,7 @@ def predict():
         generated_text = Gemini().generate_text(predicted=prediction['predicted'], model_type=model)
         response = PredictionResponse(prediction_result=prediction, generated_text=generated_text)
 
+         
         return jsonify(response.serialize())
     except ValueError as error:
         logger.error(f"An error occurred during validation: {error}")
@@ -50,4 +52,5 @@ def predict():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=security_constants_instance.flask_port)
+    app.run(host='0.0.0.0', debug=False, port=security_constants_instance.flask_port, ssl_context=(security_constants_instance.cert, security_constants_instance.key))
+    

@@ -479,3 +479,5 @@ test.*
 venv-3.12
 venv*
 *.h5
+certs/
+.venv
