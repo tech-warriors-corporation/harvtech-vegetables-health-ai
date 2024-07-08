@@ -3,7 +3,7 @@ from contextlib import contextmanager
 import pytest
 from marshmallow import ValidationError
 
-from main import predict, app
+from app import predict, app
 from schemas.PredictionResponseSchema import PredictionResponseSchema
 from tests.constants.constants import SUCCESS_TEST_DATA, FAILURE_TEST_DATA
 
