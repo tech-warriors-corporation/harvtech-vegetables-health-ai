@@ -28,8 +28,9 @@ class ModelsConstants(SecureRepr):
 
 @dataclass(frozen=True, order=True, repr=False)
 class SecurityConstants(SecureRepr):
-    cloud_storage_url_prefix: str = os.getenv("cloud_storage_url_prefix")
-    flask_port: int = os.getenv("flask_port")
+    cloud_storage_url_prefix: str = os.getenv("CLOUD_STORAGE_URL_PREFIX")
+    flask_port: int = os.getenv("FLASK_PORT")
+    flask_env: str = os.getenv("FLASK_ENV")
     # certs should be located under the project root /certs/ folder 
     cert: str = os.getenv("cert", "certs/cert.pem")
     key: str = os.getenv("key", "certs/key.pem")
@@ -37,7 +38,7 @@ class SecurityConstants(SecureRepr):
 
 @dataclass(frozen=True, order=True, repr=False)
 class GeminiConstants(SecureRepr):
-    gemini_api_key: str = os.getenv("gemini_api_key")
+    gemini_api_key: str = os.getenv("GEMINI_API_KEY")
     threshold: int = 10
     max_attempts: int = 5
     delay_seconds: int = 1

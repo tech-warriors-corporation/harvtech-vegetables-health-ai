@@ -16,9 +16,10 @@ You can get a Gemini API key in this [link](https://ai.google.dev/gemini-api/doc
 ## Environment setup
 Create a `.env` file in the root folder with content:
 ```
-cloud_storage_url_prefix=https://URL_TO_YOUR_STORAGE_DOMAIN/
-flask_port=5001
-gemini_api_key=YOUR_API_KEY_HERE
+CLOUD_STORAGE_URL_PREFIX=https://URL_TO_YOUR_STORAGE_DOMAIN/
+FLASK_PORT=5001
+GEMINI_API_KEY=YOUR_API_KEY_HERE
+FLASK_ENV=production
 ```
 
 ## Prepare
@@ -36,7 +37,7 @@ If in development use self-signed certificates, in production follow the steps o
 Run `./generate_certificates.sh` 
 
 ## Start
-Run `python3 main.py` to start project.
+Run `python3 app.py` to start project.
 
 The `https://API_URL:PORT/predict` should be used for the POST API calls
 
