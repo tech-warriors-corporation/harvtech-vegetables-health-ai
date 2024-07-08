@@ -55,5 +55,5 @@ if __name__ == "__main__":
     if security_constants_instance.flask_env == 'production':
          app.run(host='0.0.0.0', debug=False, port=security_constants_instance.flask_port, ssl_context=(security_constants_instance.cert, security_constants_instance.key))
     else:
-        app.run(debug=True, port=security_constants_instance.flask_port)
+        app.run(host='0.0.0.0', debug=True, port=security_constants_instance.flask_port)
     

@@ -36,7 +36,7 @@ If in development use self-signed certificates, in production follow the steps o
 Run `./generate_certificates.sh` 
 
 ## Start
-Run `python3 main.py` to start project.
+Run `python3 app.py` to start project.
 
 The `https://API_URL:PORT/predict` should be used for the POST API calls
 
