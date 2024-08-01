@@ -1,8 +1,12 @@
 # Use the official Python image from the Docker Hub
-FROM python:3.12-slim
+FROM python:3.12.4-bookworm
+
+ENV PYTHONBUFFERED  True
+ENV APP_HOME health-ai
+
 
 # Set the working directory in the container
-WORKDIR /app
+WORKDIR $APP_HOME
 
 
 # Install wget and any dependencies
@@ -16,7 +20,7 @@ RUN apt-get update && \
 COPY requirements.txt requirements.txt
 
 # Install any dependencies
-RUN python -m pip install --upgrade pip && python -m pip install -r requirements.txt
+RUN python -m pip install --no-cache-dir  --upgrade pip && python -m pip install --no-cache-dir -r requirements.txt
 
 
 # Copy the scripts to the Docker image (assuming they are in the same directory as the Dockerfile)
@@ -31,14 +35,13 @@ chmod +x /download_models.sh
 COPY . .
 
 # Run the script to generate certificates
-RUN /generate_certificates.sh
+# RUN /generate_certificates.sh
 
 # Download the trained models
 RUN  /download_models.sh
 
 # Expose port 5001 for the Flask app
 EXPOSE 5001
-EXPOSE 8000
 
 # Command to run the Flask app
-CMD ["python3", "main.py"]
+CMD exec gunicorn  --bind :$PORT  --workers 1 --threads 8 --timeout 0   app:app
