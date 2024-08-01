@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: python3 main.py
+    command: python3 app.py
     ports:
       - "${flask_port}:${flask_port}"
       - "8000:8000"

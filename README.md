@@ -23,7 +23,7 @@ FLASK_ENV=production
 ```
 
 ## Prepare
-Download the [best_tomato_leaf_inceptionV3_256.h5](https://techwarriors-objectstorage-test.s3.us-south.cloud-object-storage.appdomain.cloud/best_tomato_leaf_inceptionV3_256.h5) and [best_rice_leaf.h5](https://techwarriors-objectstorage-test.s3.us-south.cloud-object-storage.appdomain.cloud/best_rice_leaf.h5), put their in _constants/weights_ directory.
+Download the [best_tomato_leaf_inceptionV3_256.h5](https://techwarriors-objectstorage-test.s3.us-south.cloud-object-storage.appdomain.cloud/best_tomato_leaf_inceptionV3_256.h5) and [best_rice_leaf.h5](https://techwarriors-objectstorage-test.s3.us-south.cloud-object-storage.appdomain.cloud/best_rice_leaf.h5),  into the _constants/weights_ directory.
 
 ## Install and download models
 Use `pip install -U -r requirements.txt` to install dependencies.
@@ -31,10 +31,11 @@ Use `pip install -U -r requirements.txt` to install dependencies.
 Use `./download_models.sh` to download the trained models
 
 ## Install certificates
-If in development use self-signed certificates, in production follow the steps of your SSL authorizer
+If want to use self-certificates, run the next script to build them.
 
-### Development
 Run `./generate_certificates.sh` 
+
+> NOTE: In production the cloud provider would set these on your behalf enabling HTTPS
 
 ## Start
 Run `python3 app.py` to start project.
@@ -45,8 +46,8 @@ Following an example of the API body request
 
 ```
 {
-    "model_type": "tomato_leaf",
-    "content_url": "https://techwarriors-objectstorage-test.s3.us-south.cloud-object-storage.appdomain.cloud/0034a551-9512-44e5-ba6c-827f85ecc688___RS_Erly.B%209432.png"
+    "model_type": "rice_leaf",
+    "content_url": "https://techwarriors-objectstorage-test.s3.us-south.cloud-object-storage.appdomain.cloud/brownspotDSC_0100.jpg"
 }
 ```
 
