@@ -1,4 +1,6 @@
 import requests
+import logging
+import os
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
@@ -14,6 +16,17 @@ app = Flask(__name__)
 cors = CORS(app)  # TODO: adicionar origin apenas para aplicação do Node.
 prediction_service = PredictionService()
 
+# Ensure the log directory exists
+log_dir = '/tmp/logs'
+if not os.path.exists(log_dir):
+    os.makedirs(log_dir)
+
+# Configure logging
+logging.basicConfig(
+    filename=os.path.join(log_dir, 'app.log'),
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s'
+)
 
 @app.route("/predict", methods=["POST"])
 def predict():
