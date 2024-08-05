@@ -1,6 +1,4 @@
 import requests
-import logging
-import os
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
@@ -16,17 +14,6 @@ app = Flask(__name__)
 cors = CORS(app)  # TODO: adicionar origin apenas para aplicação do Node.
 prediction_service = PredictionService()
 
-# Ensure the log directory exists
-log_dir = '/tmp/logs'
-if not os.path.exists(log_dir):
-    os.makedirs(log_dir)
-
-# Configure logging
-logging.basicConfig(
-    filename=os.path.join(log_dir, 'app.log'),
-    level=logging.INFO,
-    format='%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s'
-)
 
 @app.route("/predict", methods=["POST"])
 def predict():
@@ -35,7 +22,7 @@ def predict():
     try:
         prediction_request = PredictionRequest(data)
         validated_data = prediction_request.load()
-        
+
         model = validated_data["model_type"]
         content_url = validated_data["content_url"]
         image_content = prediction_service.get_image(content_url)
@@ -43,7 +30,6 @@ def predict():
         generated_text = Gemini().generate_text(predicted=prediction['predicted'], model_type=model)
         response = PredictionResponse(prediction_result=prediction, generated_text=generated_text)
 
-         
         return jsonify(response.serialize())
     except ValueError as error:
         logger.error(f"An error occurred during validation: {error}")
@@ -66,7 +52,7 @@ def predict():
 
 if __name__ == "__main__":
     if security_constants_instance.flask_env == 'production':
-         app.run(host='0.0.0.0', debug=False, port=security_constants_instance.flask_port, ssl_context=(security_constants_instance.cert, security_constants_instance.key))
+        app.run(host='0.0.0.0', debug=False, port=security_constants_instance.flask_port,
+                ssl_context=(security_constants_instance.cert, security_constants_instance.key))
     else:
         app.run(debug=True, port=security_constants_instance.flask_port)
-    
