@@ -53,7 +53,7 @@ Following an example of the API body request
 
 ## Tests
 Run the directory _tests_, if in [PyCharm](https://www.jetbrains.com/pycharm) .it will execute all files with application running.
-Running in CLi, run the `pytest`command on the project directory.
+Running in CLI, run the `pytest`command on the project directory.
 > NOTE: Ensure to set the `PYTHONPATH` first to make pytest localize the `app`. In Linux OS try:  `export PYTHONPATH=.`
 
 ## Roadmap:
