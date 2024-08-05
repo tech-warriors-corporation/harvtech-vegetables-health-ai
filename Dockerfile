@@ -1,5 +1,5 @@
 # Use the official Python image from the Docker Hub
-FROM python:3.12.4-bookworm
+FROM python:3.11.9-bookworm
 
 ENV PYTHONBUFFERED  True
 ENV APP_HOME health-ai
@@ -20,7 +20,8 @@ RUN apt-get update && \
 COPY requirements.txt requirements.txt
 
 # Install any dependencies
-RUN python -m pip install --no-cache-dir  --upgrade pip && python -m pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir  --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
 
 
 # Copy the scripts to the Docker image (assuming they are in the same directory as the Dockerfile)

@@ -10,3 +10,5 @@ certs
 .env
 .github
 *.h5
+*.pth
+weights
