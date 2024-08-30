@@ -61,11 +61,11 @@ Running in CLI, run the `pytest`command on the project directory.
 - [X] Create a REST API to use this code;
 - [X] Kaggle explains;
 - [X] Tests describe how to execute;
-- [ ] Deploy project in VPS;
-- [ ] Validation URL from back-end with prefix in DNS of [cloud (Jorge)](https://cloud.ibm.com);
-- [ ] ChatGPT return with data structured;
-- [ ] Create all tests with different models;
+- [X] Deploy project in VPS;
+- [X] Validation URL from back-end with prefix in DNS of [cloud (Jorge)](https://cloud.ibm.com);
+- [X] ChatGPT return with data structured;
+- [X] Create all tests with different models;
 - [ ] Search new tomato models in [Kaggle](https://www.kaggle.com);
-- [ ] Integrated responses with [ChatGPT](https://chat.openai.com);
-- [ ] Upload vegetable images in [cloud (Jorge)](https://cloud.ibm.com);
-- [ ] Configure CORS.
+- [X] Integrated responses with [ChatGPT](https://chat.openai.com);
+- [X] Upload vegetable images in [cloud (Jorge)](https://cloud.ibm.com);
+- [X] Configure CORS.
